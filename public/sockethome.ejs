@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>
+            Home Page
+        </title>
+        <style>
+            button {
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                margin-bottom: 20px ;
+                width: 100px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+            }
+        </style>
+    </head>
+    <body>
+        <button style="background-color: #4CAF50;" onClick="makeRequest('green')">Green</button> <span id="green"><%= values[0]%></span><br>
+        <button style="background-color: #008CBA;" onClick="makeRequest('blue')">Blue</button> <span id="blue"><%= values[1]%></span><br>
+        <button style="background-color: #f44336;" onClick="makeRequest('red')">Red</button> <span id="red"><%= values[2]%></span><br>
+        <button style="background-color: #dceb0f;" onClick="makeRequest('yellow')">Yellow</button> <span id="yellow"><%= values[3]%></span><br>
+    </body>
+    <script src = "/socket.io/socket.io.js"></script>
+   
+    <script>
+        var socket = io();
+        function makeRequest(color){
+            socket.emit(color,{color});
+        }
+        socket.on('broadcast',function(data){
+            document.getElementById(data.color).innerHTML=`${data.value}`
+        })
+    </script>
+</html>
